@@ -17,7 +17,6 @@
 
 {% for movie in movies %}
 <section class="section is-small has-text-centered">
-  <a href="{{ url_for('movie_new', imdb_id=movie['id']) }}"><h1 class="title has-text-primary-dark">{{movie["name"]}}</h1></a>
   {% if current_user.is_admin %}
   <h2 class="subtitle has-text-danger"> Movie ID: {{movie["name"]}}</h2>
   {% endif %}

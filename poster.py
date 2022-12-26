@@ -46,10 +46,15 @@ class Poster:
         return
 
 
-    def delete_game():
-        url = ""
+    def delete_game(self, game_id):
+        url="https://game-service-ixdm6djuha-uc.a.run.app/game/{}".format(game_id)
         response = requests.delete(url)
+        return
         
+    def delete_user(self, game_id):
+        #url="https://game-service-ixdm6djuha-uc.a.run.app/game/{}".format(game_id)
+        #response = requests.delete(url)
+        return
 
     
         
