@@ -106,7 +106,7 @@ def add_game_new_page():
             dict_object["genres"] = genres
             dict_object["platforms"] = platforms
 
-            if not uploaded_file is not None:
+            if uploaded_file is not None:
                 dosyam = open(os.path.join(path, uploaded_file.filename), "rb")
                 #print(dosyam)
                 dict_object["cover"] = str(base64.b64encode(dosyam.read()))[2:-1]
