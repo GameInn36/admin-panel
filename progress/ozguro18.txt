@@ -1,0 +1,33 @@
+# Week 1 1.11.2021
+- Basics of dynamic content generation added according to tutorial "https://web.itu.edu.tr/uyar/fad/"
+- Structes of dynamic content generation added
+- Some design related buttons and decisions are made related to our project domain.
+# Week 2 8.11.2021
+- Basics of form reading and "GET" "POST" methods are implemented.
+- Design related changes are made according to our project for the upcoming weeks.
+# Week 4 22.11.2021
+- Configuration of authenticated buttons and features are completed.
+- Edit button is only made accesible for regular users.
+- Login privileges setted up to deny entry for some pages.
+# Week 5 29.11.2021
+- Database connection to Flask application is provided. Now data is persistent.
+- Our data table designs are performed accordingly but not pushed.
+- Current database with this commit is just for testing the features of our website.
+- Login system is integrated into database. Users are now registered in database.
+# Week 6 05.11.2021
+- Movie searchbar added to movie_new.html template.
+- Form reading of movie searchbar is done.
+- Required database connections are made and database is moved out of the repository.
+#Week 7 12.11.2021
+- Database structure changed to PostgreSQL platform using Pgadmin.
+- All dataset tables are prepared and imported from CSV.
+- BLOB R/W and searchbar done.
+#Week 8 19.11.2021
+- Search results done.
+- New movie page with detailed info is implemented.
+- Director names are bold now.
+#Week 9 26.11.2021
+- Casting and actor page done.
+- User side is completed with pp upload and sign up.
+- User delete feature is added.
+- Bio update and movie adding feature implemented.

@@ -4,6 +4,7 @@ from passlib.hash import pbkdf2_sha256 as hasher
 import os
 
 import views
+from poster import Poster
 from database import Database
 from user import get_user
 
@@ -20,11 +21,12 @@ def create_app():
       
 
     app.add_url_rule("/", view_func=views.home_page, methods=["GET", "POST"])
+    app.add_url_rule("/user_search", view_func=views.user_search, methods=["GET", "POST"])
     app.add_url_rule("/login", view_func=views.login_page, methods=["GET", "POST"])
     app.add_url_rule("/signup", view_func=views.signup_page, methods=["GET", "POST"])
     app.add_url_rule("/profile", view_func=views.profile_page)
-    app.add_url_rule("/add_movie", view_func=views.add_movie_new_page, methods=["GET", "POST"])
-    app.add_url_rule("/delete_movie/<string:imdb_title_id>", view_func=views.delete_movie_page)
+    app.add_url_rule("/add_game", view_func=views.add_game_new_page, methods=["GET", "POST"])
+    app.add_url_rule("/delete_game/<string:id>", view_func=views.delete_game_page)
     app.add_url_rule("/update_movie/<string:imdb_title_id>", view_func=views.update_avg_vote_page, methods=["GET", "POST"])
     app.add_url_rule("/add_person", view_func=views.add_person_page, methods=["GET", "POST"])
     app.add_url_rule("/delete_person/<string:imdb_name_id>", view_func=views.delete_person_page)
@@ -50,6 +52,10 @@ def create_app():
     
     db = Database("host='localhost' user='postgres' password='password' dbname='DBProject'")
     app.config["db"] = db
+
+    poster = Poster()
+    app.config["p"] = poster
+
    
     return app
 

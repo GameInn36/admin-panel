@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}Update Height{% endblock %}
+{% block content %}
+    <h1 class="title  has-text-info-dark">Update {{person.name}}'s Height</h1>
+
+    <form action="" method="post" name="update_avg_vote">
+      
+
+      <div class="field">
+        <label for="height" class="label">Height</label>
+        <div class="control">
+          <input type="number" name="height" class="input"/>
+        </div>
+        {% if 'height' in values.errors %}
+        <p class="help has-background-warning">
+            {{ values.errors['height'] }}
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-primary is-medium">Update</button>
+        </div>
+      </div>
+    </form>
+{% endblock %}

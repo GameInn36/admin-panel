@@ -1,4 +1,6 @@
+import base64
 from datetime import datetime
+import json
 from flask import current_app, render_template, request, redirect, url_for, flash, abort
 from flask_login.utils import login_required
 from movie import Movie
@@ -13,17 +15,34 @@ import re
 
 
 def home_page():
-    db = current_app.config["db"]
+    p = current_app.config["p"]
     if request.method == "GET":
         return render_template("movies_search.html")
     else:
         title = request.form["title"]
-        score = request.form["score"]
-        lang = request.form["answer"]
-        genres = request.form.getlist("genres")
+        #score = request.form["score"]
+        #lang = request.form["answer"]
+        #genres = request.form.getlist("genres")
 
-        movies = db.search_movie(title, score, lang, genres)
-        return render_template("search.html", movies=movies) 
+        #movies = db.search_movie(title, score, lang, genres)
+        games = p.search_game(title)
+        return render_template("search.html", movies=games) 
+        return render_template("add_movie.html", values = {"title": "o", "year": "12", "avg_vote": "5"}) 
+
+def user_search():
+    p = current_app.config["p"]
+    if request.method == "GET":
+        return render_template("user_search.html")
+    else:
+        title = request.form["title"]
+
+        #movies = db.search_movie(title, score, lang, genres)
+        users = p.search_user(title)
+        print(users)
+        return render_template("user_search_results.html", movies=users) 
+        return render_template("add_movie.html", values = {"title": "o", "year": "12", "avg_vote": "5"}) 
+
+
 
 def profile_page():
     db = current_app.config["db"]
@@ -46,13 +65,11 @@ def delete_profile_page():
 
     return redirect(url_for("home_page"))
 
-@login_required
-def add_movie_new_page():
-    if not current_user.is_admin:
-        abort(401)
-    else:
+
+def add_game_new_page():
+        p = current_app.config["p"]
         if request.method == "GET":
-            values = {"title": "", "year": "", "avg_vote": ""}
+            values = {"title": "o", "year": "12", "avg_vote": "5"}
             return render_template(
                 "add_movie.html",
                 values=values,
@@ -68,12 +85,54 @@ def add_movie_new_page():
                     min_score = 0,
                     max_score = 10
                 )
+
+            dict_object = {}
+
+            uploaded_file = request.files.get('cover')
+            print(uploaded_file)
+            extensions = ['.jpg', '.png', '.gif']
+            path = 'uploads' 
+            if uploaded_file.filename != '':
+                filename = uploaded_file.filename
+                file_ext = os.path.splitext(filename)[1]
+                if file_ext not in extensions:
+                    abort(400)
+
+
+
+            uploaded_file.save(os.path.join(path, uploaded_file.filename))
             title = request.form.data["title"]
-            year = request.form.data["year"]
-            avg_vote = request.form.data["avg_vote"]
-            movie = Movie("", title, year, "", "", "", "", "", "Unknown", "", "", avg_vote, 0)
-            db = current_app.config["db"]
-            imdb_title_id = db.add_movie_new(movie)
+            print(title)
+            description = request.form.data["description"]
+            print(description)
+            timestamp = request.form.data["timestamp"]
+            print(timestamp)
+            platforms = request.form.getlist("platforms")
+            print(platforms)
+            genres = request.form.getlist("genres")
+            print(genres)
+            publisher = request.form.data["publisher"]
+
+            dict_object["name"] = title
+            dict_object["summary"] = description
+            dict_object["first_release_date"] = timestamp
+            dict_object["publisher"] = publisher
+            dict_object["genres"] = genres
+            dict_object["platforms"] = platforms
+            dosyam = open(os.path.join(path, uploaded_file.filename), "rb")
+            #print(dosyam)
+            dict_object["cover"] = str(base64.b64encode(dosyam.read()))[2:-1]
+            dict_object["logCount"] = 0
+
+            json_object = json.dumps(dict_object, indent = 4) 
+            #print(json_object)
+            p.add_game(dict_object)
+            with open("sample.json", "w") as outfile:
+                outfile.write(json_object)
+            #movie = Movie("", title, year, "", "", "", "", "", "Unknown", "", "", avg_vote, 0)
+            #db = current_app.config["db"]
+            #imdb_title_id = db.add_movie_new(movie)
+            return render_template("movies_search.html")
             return redirect(url_for("movie_new", imdb_id = imdb_title_id))
 
 @login_required
@@ -198,14 +257,14 @@ def add_review_page(imdb_title_id):
 
 
 def movie_new(imdb_id):
-    db = current_app.config["db"]
-    movie = db.get_movie_new(imdb_id)
-    reviews = db.get_reviews(imdb_id)
-    return render_template("movie_new.html", movie=movie, imdb_id=imdb_id, reviews=reviews)
+    #db = current_app.config["db"]
+    #movie = db.get_movie_new(imdb_id)
+    #reviews = db.get_reviews(imdb_id)
+    return render_template("movie_new.html", movie={"name": "obenin filmi"}, imdb_id=imdb_id, reviews=[])
 
-def delete_movie_page(imdb_title_id):
-    db = current_app.config["db"]
-    db.delete_movie_new(imdb_title_id)
+def delete_game_page(id):
+    #db = current_app.config["db"]
+    #db.delete_movie_new(imdb_title_id)
     return redirect(url_for("home_page"))
 
 def delete_person_page(imdb_name_id):
@@ -340,11 +399,23 @@ def validate_movie_form_new(form):
     form.errors = {}
 
     form_title = form.get("title", "").strip()
+    form_description = form.get("description", "").strip()
+    form_publisher = form.get("publisher", "").strip()
     #form_director = form.get("director", "").strip()
     if len(form_title) == 0:
         form.errors["title"] = "Title can not be blank."
     else:
         form.data["title"] = form_title
+
+    if len(form_description) == 0:
+        form.errors["description"] = "Description can not be blank."
+    else:
+        form.data["description"] = form_description
+
+    if len(form_publisher) == 0:
+        form.errors["publisher"] = "Publisher can not be blank."
+    else:
+        form.data["publisher"] = form_publisher
     
 
     form_avg_vote = form.get("avg_vote")
@@ -359,17 +430,13 @@ def validate_movie_form_new(form):
         else:
             form.data["avg_vote"] = avg_vote
 
-    form_year = form.get("year")
-    if not form_year:
-        form.data["year"] = None
-    elif not form_year.isdigit():
-        form.errors["year"] = "Year must consist of digits only."
+    form_year = form.get("timestamp")
+    year = int(form_year)
+    if year >= 0 and year < 2147483647:
+        form.data["timestamp"] = year
     else:
-        year = int(form_year)
-        if (year < 1887) or (year > datetime.now().year):
-            form.errors["year"] = "Year not in valid range."
-        else:
-            form.data["year"] = year
+        form.errors["timestamp"] = "Timestamp must be larger than 0 and less than 2,147,483,647."
+    
 
     return len(form.errors) == 0
 

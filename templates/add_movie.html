@@ -1,0 +1,243 @@
+{% extends "layout.html" %}
+{% block title %}Add Movie{% endblock %}
+{% block content %}
+    <h1 class="title  has-text-info-dark">Add Game</h1>
+
+    <form action="" method="post" name="movie_add" enctype="multipart/form-data">
+      <div class="field">
+        <label for="title" class="label">Title</label>
+        <div class="control">
+          <input type="text" name="title" class="input" required="required"/>
+        </div>
+        {% if 'title' in values.errors %}
+        <p class="help has-background-warning">
+            {{ values.errors['title'] }}
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="field">
+        <label for="timestamp" class="label">Release Date Timestamp</label>
+        <div class="control">
+          <input type="number" name="timestamp" class="input"/>
+        </div>
+        {% if 'timestamp' in values.errors %}
+        <p class="help has-background-warning">
+            {{ values.errors['timestamp'] }}
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="field">
+        <label for="description" class="label">Description</label>
+        <div class="control">
+          <input type="text" name="description" class="input"/>
+        </div>
+        {% if 'description' in values.errors %}
+        <p class="help has-background-warning">
+            {{ values.errors['description'] }}
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="field">
+        <label for="publisher" class="label">Publisher</label>
+        <div class="control">
+          <input type="text" name="publisher" class="input"/>
+        </div>
+        {% if 'publisher' in values.errors %}
+        <p class="help has-background-warning">
+            {{ values.errors['publisher'] }}
+        </p>
+        {% endif %}
+      </div>
+      
+      <div class="field">
+        <label for="cover" class="label">Cover</label>
+        <div class="control">
+          <input type="file" id="cover" name="cover">
+        </div>
+      </div>
+
+
+      
+
+      
+      
+      <div class="columns">
+    <!--
+
+      <div class="column is-3 is-offset-1">
+        <div class="control">
+          <label class="radio block">
+            <input type="radio" name="answer" value="en">
+                English
+            </label>
+            <label class="radio block">
+                <input type="radio" name="answer" value="tr">
+                Turkish
+            </label>
+            <label class="radio block">
+                <input type="radio" name="answer" value="all" checked>
+                All
+            </label>
+          </div>
+        </div>
+
+      -->
+
+
+      <div class="column is-4 is-offset-2">
+      <label class="checkbox">
+          <input type="checkbox" name = "platforms" value ="PC">
+          PC  
+      </label>
+      
+      <label class="checkbox">
+          <input type="checkbox" name="platforms" value="Playstation 4">
+          Playstation 4
+        </label>
+      
+      <label class="checkbox">
+          <input type="checkbox" name="platforms" value="Xbox One">
+          Xbox One
+      </label>
+      
+      <label class="checkbox">
+          <input type="checkbox" name="platforms" value="Android">
+          Android
+      </label>
+
+      <br>
+
+      <label class="checkbox">
+        <input type="checkbox" name="platforms" value="iOS">
+        iOS
+      </label>
+      
+      
+      <label class="checkbox">
+        <input type="checkbox" name="platforms" value="Playstation 5">
+        Playstation 5
+      </label>
+      
+      <label class="checkbox">
+        <input type="checkbox" name="platforms" value="Xbox Series X|S">
+        Xbox Series X|S
+      </label>
+
+      
+    </div>
+    
+    
+
+    
+    <div class="column is-4 is-offset-0">
+        <label class="checkbox">
+          <input type="checkbox" name = "genres" value ="Role-playing (RPG)">
+            Role-playing (RPG)  
+          </label>
+          
+          <label class="checkbox">
+            <input type="checkbox" name="genres" value="Hack and slash/Beat 'em up">
+            Hack and slash/Beat 'em up
+          </label>
+          
+          <label class="checkbox">
+            <input type="checkbox" name="genres" value="Adventure">
+            Adventure
+          </label>
+
+        <label class="checkbox">
+          <input type="checkbox" name="genres" value="Fighting">
+          Fighting
+        </label>
+
+        <br>
+
+        <label class="checkbox">
+            <input type="checkbox" name="genres" value="Shooter">
+            Shooter
+          </label>
+        
+        
+          <label class="checkbox">
+            <input type="checkbox" name="genres" value="Strategy">
+            Strategy
+          </label>
+        
+          <label class="checkbox">
+            <input type="checkbox" name="genres" value="Tactical">
+            Tactical
+          </label>
+
+          <label class="checkbox">
+            <input type="checkbox" name="genres" value="Puzzle">
+            Puzzle
+          </label>
+        
+        <br>
+        
+        <label class="checkbox">
+            <input type="checkbox" name="genres" value="Indie">
+            Indie
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="genres" value="Turn-based strategy (TBS)">
+          Turn-based strategy (TBS)
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" name="genres" value="Sport">
+            Sport
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" name="genres" value="Platform">
+            Platform
+        </label>
+
+        <br>
+        
+        <label class="checkbox">
+          <input type="checkbox" name="genres" value="Music">
+            Music
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" name="genres" value="Simulator">
+            Simulator
+          </label>
+        <label class="checkbox">
+            <input type="checkbox" name="genres" value="Indie">
+            Indie
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" name="genres" value="Arcade">
+            Arcade
+        </label>
+
+        <br>
+
+        
+        <label class="checkbox">
+                <input type="checkbox" name="genres" value="Racing">
+                Racing
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="genres" value="Point-and-click">
+                Point-and-click
+            </label>
+            
+            <label class="checkbox">
+                <input type="checkbox" name="genres" value="Visual Novel">
+                Visual Novel
+              </label>
+
+              
+        </div>
+      </div>
+
+      
+      <input type=submit class="button is-primary is-medium" value=Add>
+
+      
+    </form>
+{% endblock %}
