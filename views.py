@@ -52,6 +52,28 @@ def delete_profile_page():
     return redirect(url_for("home_page"))
 
 @login_required
+def delete_review():
+        p = current_app.config["p"]
+        if request.method == "GET":
+            values = {"title": "o", "year": "12", "avg_vote": "5"}
+            return render_template(
+                "delete_review.html",
+                values=values,
+            )
+        else:
+            dict_object = {}
+            review_id = request.form["review_id"]
+            #print(json_object)
+            p.delete_review(review_id)
+            #movie = Movie("", title, year, "", "", "", "", "", "Unknown", "", "", avg_vote, 0)
+            #db = current_app.config["db"]
+            #imdb_title_id = db.add_movie_new(movie)
+            return redirect(url_for("home_page"))
+            return render_template("movies_search.html")
+            return redirect(url_for("movie_new", imdb_id = imdb_title_id))
+
+
+@login_required
 def add_game_new_page():
         p = current_app.config["p"]
         if request.method == "GET":

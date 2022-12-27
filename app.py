@@ -25,6 +25,7 @@ def create_app():
     app.add_url_rule("/add_game", view_func=views.add_game_new_page, methods=["GET", "POST"])
     app.add_url_rule("/delete_game/<string:id>", view_func=views.delete_game_page)
     app.add_url_rule("/delete_user/<string:id>", view_func=views.delete_user_page)
+    app.add_url_rule("/delete_review", view_func=views.delete_review, methods=["GET", "POST"])
     app.add_url_rule("/logout", view_func=views.logout_page)
 
     lm.init_app(app)

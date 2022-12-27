@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Add Movie{% endblock %}
+{% block content %}
+    <h1 class="title  has-text-info-dark">Delete Review</h1>
+
+    <form action="" method="post" name="delete_review" enctype="multipart/form-data">
+      <div class="field">
+        <label for="review_id" class="label">Review Id</label>
+        <div class="control">
+          <input type="text" name="review_id" class="input" required="required"/>
+        </div>
+      </div>
+
+      
+      
+      
+      <input type=submit class="button is-primary is-medium" value=Delete>
+
+      
+    </form>
+{% endblock %}

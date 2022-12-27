@@ -51,6 +51,11 @@ class Poster:
         response = requests.delete(url)
         return
         
+    def delete_review(self, review_id):
+        url="https://review-service-ixdm6djuha-uc.a.run.app/review/{}".format(review_id)
+        response = requests.delete(url)
+        return
+
     def delete_user(self, game_id):
         #url="https://game-service-ixdm6djuha-uc.a.run.app/game/{}".format(game_id)
         #response = requests.delete(url)

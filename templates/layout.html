@@ -40,6 +40,12 @@
                         <strong>User Search</strong>
                     </a>
                 </div>
+
+                <div class="navbar-item">
+                    <a class="button is-warning is-light" href="{{ url_for('delete_review') }}">
+                        <strong>Delete Review</strong>
+                    </a>
+                </div>
                
                 {% if not current_user.is_authenticated %}
                 <div class="navbar-item">
